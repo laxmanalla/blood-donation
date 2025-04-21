@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        dockerTool 'docker'    // Specify the Docker tool to use
-    }
     stages {
         stage('Check Environment') {
             steps {

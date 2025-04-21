@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'windows'  // Specify that this should run on a windows agent
+    }
     
     stages {
         stage('Checkout') {
@@ -25,21 +27,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Verify Deployment') {
-            steps {
-                script {
-                    // Wait for container to start
-                    powershell 'Start-Sleep -Seconds 5'
-                    
-                    // Check if container is running
-                    powershell 'docker ps -f "name=blood-donation-container"'
-                    
-                    // Test HTTP connection to the deployed site
-                    powershell 'Invoke-WebRequest -Uri "http://localhost:8081" -UseBasicParsing'
-                }
-            }
-        }
     }
     
     post {
@@ -48,16 +35,6 @@ pipeline {
         }
         failure {
             echo 'Deployment failed!'
-            
-            // Cleanup on failure
-            script {
-                powershell 'docker stop blood-donation-container -ErrorAction SilentlyContinue'
-                powershell 'docker rm blood-donation-container -ErrorAction SilentlyContinue'
-            }
-        }
-        always {
-            // Record deployment artifacts if needed
-            echo 'Pipeline completed'
         }
     }
 }

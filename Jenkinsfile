@@ -2,16 +2,16 @@ pipeline {
     agent any
     
     stages {
-        stage('Validate Environment') {
-            steps {
-                // Display the workspace directory and list files to validate structure
-                powershell 'Write-Host "Workspace: $env:WORKSPACE"'
-                powershell 'Get-ChildItem -Path . | Format-Table Name, Length'
+        // stage('Validate Environment') {
+        //     steps {
+        //         // Display the workspace directory and list files to validate structure
+        //         powershell 'Write-Host "Workspace: $env:WORKSPACE"'
+        //         powershell 'Get-ChildItem -Path . | Format-Table Name, Length'
                 
-                // Verify Docker is available
-                powershell 'docker version'
-            }
-        }
+        //         // Verify Docker is available
+        //         powershell 'docker version'
+        //     }
+        // }
         
         stage('Build Docker Image') {
             steps {

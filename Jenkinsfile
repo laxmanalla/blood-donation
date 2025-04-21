@@ -11,16 +11,32 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'docker build -t blood-donation:latest .'
+                    powershell 'docker build -t blood-donation:latest .'
                 }
             }
         }
         
         stage('Run Docker Container') {
-            steps {                script {
-                    bat 'docker stop blood-donation-container || true'
-                    bat 'docker rm blood-donation-container || true'
-                    bat 'docker run -d -p 8081:80 --name blood-donation-container blood-donation:latest'
+            steps {
+                script {
+                    powershell 'docker stop blood-donation-container -ErrorAction SilentlyContinue'
+                    powershell 'docker rm blood-donation-container -ErrorAction SilentlyContinue'
+                    powershell 'docker run -d -p 8081:80 --name blood-donation-container blood-donation:latest'
+                }
+            }
+        }
+        
+        stage('Verify Deployment') {
+            steps {
+                script {
+                    // Wait for container to start
+                    powershell 'Start-Sleep -Seconds 5'
+                    
+                    // Check if container is running
+                    powershell 'docker ps -f "name=blood-donation-container"'
+                    
+                    // Test HTTP connection to the deployed site
+                    powershell 'Invoke-WebRequest -Uri "http://localhost:8081" -UseBasicParsing'
                 }
             }
         }
@@ -32,6 +48,16 @@ pipeline {
         }
         failure {
             echo 'Deployment failed!'
+            
+            // Cleanup on failure
+            script {
+                powershell 'docker stop blood-donation-container -ErrorAction SilentlyContinue'
+                powershell 'docker rm blood-donation-container -ErrorAction SilentlyContinue'
+            }
+        }
+        always {
+            // Record deployment artifacts if needed
+            echo 'Pipeline completed'
         }
     }
 }

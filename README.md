@@ -42,5 +42,8 @@ The `Jenkinsfile` defines a declarative pipeline with the following stages:
 4.  Set the "Script Path" to `Jenkinsfile` (this is usually the default).
 5.  Save the job configuration.
 6.  Run the pipeline job manually ("Build Now") or configure triggers (e.g., SCM polling, webhooks).
+
 ## Accessing the Website
 Once the pipeline successfully completes the 'Deploy' stage, the website will be accessible at `http://<jenkins_agent_ip>:8081` (as defined in the `docker-compose.yml` port mapping).
+
+This is connected to trigger autobuilds using ngrok free version

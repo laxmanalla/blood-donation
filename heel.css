@@ -1,0 +1,16 @@
+body{
+   border: 1px solid rgb(7, 7, 7);
+   height: 400px;
+   width: 500px;
+   margin: 20px auto;
+   background-color: aquamarine;
+}
+#h1{
+   font-size: 30px;
+   text-align: center;
+   margin-top: 60px;
+}
+#p1{
+   text-align: justify;
+   margin: 50px;
+}

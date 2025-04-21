@@ -1,0 +1,19 @@
+#back{
+   font-size: 60px;
+   margin-left: 40px;
+   margin-top: 20px;
+}
+body{
+   background: greenyellow;
+}
+#face{
+   margin-top: 200px;
+   border: 50%;
+   width: 200px;
+   height: 200px;
+   display: inline-block;
+   margin-left: 150px;
+}
+#border{
+   display: inline-block;
+}

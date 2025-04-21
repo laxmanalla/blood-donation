@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor Registration</title>
+  <link rel="stylesheet" href="reg.css" />
+</head>
+<body>
+    <div class="container">
+      <form action="action_page.php">
+        <div class="row">
+          <div>
+            <h2>BLOOD DONATION REGISTRATION FORM</h2>
+          </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="fname">Donor's Name:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="fname" name="firstname" placeholder="Please Enter Your Name..">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="lname">Last Name:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="lname" name="lastname" placeholder="Please Enter Your Last Name..">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="bg">Blood Group:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="bg" name="bg" placeholder="Please Enter Your Blood Group">
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-25">
+            <label for="State">State:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="State" name="State" placeholder="Please Enter Your State">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="City">City:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="City" name="bg" placeholder="Please Enter Your City">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="mobileno.">Mobile No.:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="mobileno." name="mobileno." placeholder="Please Enter Your Mobile No.">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="email">E-mail:</label>
+          </div>
+          <div class="col-75">
+            <input type="email" id="email" name="email" placeholder="Please Enter Your email">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="password">Password:</label>
+          </div>
+          <div class="col-75">
+            <input type="password" id="password" name="password" placeholder="Please Enter Your Password">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="Confirm Password">Confirm Password:</label>
+          </div>
+          <div class="col-75">
+            <input type="password" id="Confirm Password" name="Confirm Password" placeholder="Please Enter Your Confirm Password">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="ltbd">Last Time Blood Donated:</label>
+          </div>
+          <div class="col-75">
+            <select id="ltbd" name="ltbd">
+              <option value="nvr donated">Not Donated Ever</option>
+              <option value="3 month">3 Months Ago</option>
+              <option value="1yr">1yr Ago</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="country">Country:</label>
+          </div>
+          <div class="col-75">
+            <select id="country" name="country">
+              <option value="dl">Delhi</option>
+              <option value="ASSAM">Assam</option>
+              <option value="mumbai">Maharastra</option>
+              <option value="Punjab">Punjab</option>
+              <option value="a.p">Andra Pradesh</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <input type="submit" value="Submit">
+        </div>
+      </form>
+    </div>  
+</body>
+</html>

@@ -1,0 +1,77 @@
+#back{
+    margin: 0px;
+    margin-bottom: 0px;
+    font-size: 50px;
+}
+
+#back{
+    height: 100vh;
+    width: 100%;
+    background: url("C:/Users/Ashu/Downloads/blood-donation-background.jpg");
+    background-position: center;
+    background-size: cover; 
+    box-sizing: border-box;
+    position: relative;
+}
+.signin{
+    width: 320px;
+    height: 450px;
+    background: #000;
+    color:whitesmoke;
+    top:50%;
+    left:50%;
+    padding-top: 17px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    border-radius: 25px;
+    padding-left: 20px;
+    box-shadow:0 0 29px rgb(28, 51, 255);
+
+}
+h1{
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
+}
+.signin p{
+    font-weight: bold;
+}
+.signin input{
+    width: 80%;
+    margin-bottom: 20px;
+}
+.signin input[type="text"], input[type="Password"]
+{
+    border-bottom:1px;
+    border-color: black;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color:#fff;
+    font-size: 16px;
+}
+.signin input[type="submit"]
+{
+    height:40px;
+    background-color: #fb2525;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 20px;
+}
+.signin input[type="submit"]:hover
+{
+    cursor: pointer;
+    background: rgb(227, 141, 141);
+    transition: 1s;
+    color: #000;
+}
+.signin a{
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 20px;
+    color:darkgray;
+}
+.signin a:hover{
+    color:blue
+}

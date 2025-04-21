@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  blood-donation-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: blood-donation:latest
+    container_name: blood-donation-container
+    ports:
+      - "8081:80"
+    restart: always

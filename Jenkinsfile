@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image - Dockerfile is in the same directory
-                    bat 'docker build -t blood-donation:latest .'
+                    sh 'docker build -t blood-donation:latest .'
                 }
             }
         }
@@ -15,14 +15,13 @@ pipeline {
             steps {
                 script {
                     // Stop and remove existing container if it exists
-                    bat 'docker stop blood-donation-container || echo "Container not running"'
-                    bat 'docker rm blood-donation-container || echo "Container does not exist"'
-                    
-                    // Run the new container
-                    bat 'docker run -d -p 8081:80 --name blood-donation-container blood-donation:latest'
+                    sh 'docker stop blood-donation-container || echo "Container not running"'
+                    sh 'docker rm blood-donation-container || echo "Container does not exist"'
+                      // Run the new container
+                    sh 'docker run -d -p 8081:80 --name blood-donation-container blood-donation:latest'
                     
                     // Verify container is running
-                    bat 'docker ps -f "name=blood-donation-container"'
+                    sh 'docker ps -f "name=blood-donation-container"'
                 }
             }
         }
@@ -31,10 +30,10 @@ pipeline {
             steps {
                 script {
                     // Wait for container to start fully
-                    bat 'timeout /t 5'
+                    sh 'sleep 5'
                     
-                    // Test that the website is accessible (simplified to avoid PowerShell complexity)
-                    bat 'curl -s -o nul -w "%%{http_code}" http://localhost:8081 || echo "Website check failed"'
+                    // Test that the website is accessible
+                    sh 'curl -s -o /dev/null -w "%{http_code}" http://localhost:8081 || echo "Website check failed"'
                 }
             }
         }
@@ -46,13 +45,13 @@ pipeline {
         }
         failure {
             echo 'Deployment failed!'
-            // Cleanup on failure with simpler batch commands
-            bat 'docker stop blood-donation-container || echo "No container to stop"'
-            bat 'docker rm blood-donation-container || echo "No container to remove"'
+            // Cleanup on failure with shell commands
+            sh 'docker stop blood-donation-container || echo "No container to stop"'
+            sh 'docker rm blood-donation-container || echo "No container to remove"'
         }
         always {
             // Always display the running containers for logging purposes
-            bat 'docker ps || echo "Cannot list containers"'
+            sh 'docker ps || echo "Cannot list containers"'
         }
     }
 }

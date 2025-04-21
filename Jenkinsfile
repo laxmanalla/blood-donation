@@ -2,26 +2,49 @@ pipeline {
     agent any
     
     stages {
-        stage('Build Docker Image') {
+        stage('Check Environment') {
             steps {
                 script {
-                    // Build the Docker image - Dockerfile is in the same directory
-                    sh 'docker build -t blood-donation:latest .'
+                    // Check if Docker is installed and available
+                    sh 'echo "Checking for Docker installation..."'
+                    sh 'which docker || echo "ERROR: Docker is not installed or not in PATH"'
+                    sh 'echo "Current working directory: $(pwd)"'
+                    sh 'echo "System information: $(uname -a)"'
                 }
             }
         }
         
-        stage('Run Docker Container') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // Stop and remove existing container if it exists
-                    sh 'docker stop blood-donation-container || echo "Container not running"'
-                    sh 'docker rm blood-donation-container || echo "Container does not exist"'
-                      // Run the new container
-                    sh 'docker run -d -p 8081:80 --name blood-donation-container blood-donation:latest'
-                    
-                    // Verify container is running
-                    sh 'docker ps -f "name=blood-donation-container"'
+                    // Try to build the Docker image
+                    sh '''
+                        if command -v docker &> /dev/null; then
+                            echo "Building Docker image..."
+                            docker build -t blood-donation:latest .
+                        else
+                            echo "ERROR: Docker command not found. Please install Docker on the Jenkins agent."
+                            exit 1
+                        fi
+                    '''
+                }
+            }
+        }
+          stage('Run Docker Container') {
+            steps {
+                script {
+                    sh '''
+                        if command -v docker &> /dev/null; then
+                            echo "Managing Docker container..."
+                            docker stop blood-donation-container || echo "Container not running"
+                            docker rm blood-donation-container || echo "Container does not exist"
+                            docker run -d -p 8081:80 --name blood-donation-container blood-donation:latest
+                            docker ps -f "name=blood-donation-container"
+                        else
+                            echo "ERROR: Docker command not found. Cannot run container."
+                            exit 1
+                        fi
+                    '''
                 }
             }
         }
@@ -29,11 +52,17 @@ pipeline {
         stage('Test Deployment') {
             steps {
                 script {
-                    // Wait for container to start fully
-                    sh 'sleep 5'
-                    
-                    // Test that the website is accessible
-                    sh 'curl -s -o /dev/null -w "%{http_code}" http://localhost:8081 || echo "Website check failed"'
+                    sh '''
+                        echo "Waiting for container to start..."
+                        sleep 5
+                        
+                        if command -v curl &> /dev/null; then
+                            echo "Testing website accessibility..."
+                            curl -s -o /dev/null -w "%{http_code}" http://localhost:8081 || echo "Website check failed"
+                        else
+                            echo "WARNING: curl command not found. Skipping website test."
+                        fi
+                    '''
                 }
             }
         }
@@ -45,13 +74,29 @@ pipeline {
         }
         failure {
             echo 'Deployment failed!'
-            // Cleanup on failure with shell commands
-            sh 'docker stop blood-donation-container || echo "No container to stop"'
-            sh 'docker rm blood-donation-container || echo "No container to remove"'
+            script {
+                sh '''
+                    if command -v docker &> /dev/null; then
+                        echo "Cleaning up containers..."
+                        docker stop blood-donation-container || echo "No container to stop"
+                        docker rm blood-donation-container || echo "No container to remove"
+                    else
+                        echo "WARNING: Docker command not found. Cannot clean up containers."
+                    fi
+                '''
+            }
         }
         always {
-            // Always display the running containers for logging purposes
-            sh 'docker ps || echo "Cannot list containers"'
+            script {
+                sh '''
+                    if command -v docker &> /dev/null; then
+                        echo "Listing running containers..."
+                        docker ps || echo "Cannot list containers"
+                    else
+                        echo "WARNING: Docker command not found. Cannot list containers."
+                    fi
+                '''
+            }
         }
     }
 }

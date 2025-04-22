@@ -22,7 +22,7 @@ pipeline {
                 script {
                     echo 'Deploying the container using Docker Compose...'
                     // Ensure docker-compose is installed on the Jenkins agent
-                    sh 'docker-compose up -d'
+                    sh 'docker compose up -d'
                 }
             }
         }

@@ -45,5 +45,3 @@ The `Jenkinsfile` defines a declarative pipeline with the following stages:
 
 ## Accessing the Website
 Once the pipeline successfully completes the 'Deploy' stage, the website will be accessible at `http://<jenkins_agent_ip>:8081` (as defined in the `docker-compose.yml` port mapping).
-
-This is connected to trigger autobuilds using ngrok free version

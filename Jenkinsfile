@@ -1,6 +1,5 @@
 pipeline {
     agent any
-<<<<<<< HEAD
 
     environment {
         REPO_URL = 'https://github.com/laxmanalla/blood-donation'
@@ -8,8 +7,6 @@ pipeline {
         COMPOSE_PROJECT_NAME = 'blood-donation'
     }
 
-=======
->>>>>>> 30ba34795962619388a04b6a726c79457be810bc
     stages {
         stage('Clone Repository') {
             steps {

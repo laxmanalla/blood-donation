@@ -3,7 +3,12 @@ pipeline {
 
     stages {
         stage('Build Docker Image') {
+
             steps {
+                script {
+                        echo 'Identifying Jenkins agent user...'
+                        sh 'whoami' // This command prints the current username
+                    }
                 script {
                     echo 'Building the Docker image...'
                     // Use the docker build command directly or ensure Docker plugin is configured
